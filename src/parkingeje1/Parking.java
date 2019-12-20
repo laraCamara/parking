@@ -1,5 +1,9 @@
 package parkingeje1;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /**
  *
  * @author Lara
@@ -40,8 +44,8 @@ public class Parking {
         int nplaza = 0;
         boolean encontrado = false;
 
-        while ((nplaza < plazas.length) & !encontrado) {
-            if (plazas[nplaza].equals("libre")) {
+        while ((nplaza < plazas.length) && !encontrado) {
+            if (plazas[nplaza].equalsIgnoreCase("libre")) {
                 encontrado = true;
             } else {
                 nplaza++;
@@ -61,8 +65,46 @@ public class Parking {
             
         }
         else {
-            plazas[nplaza]= "OCUPADO";
+            plazas[nplaza]= "OCUPADA";
             System.out.println("La plaza asignada es: \t "+nplaza);
         }
     }
+     public float pedirNumero(String mensaje, int linferior, int lsuperior) {
+        InputStreamReader flujo = new InputStreamReader(System.in);
+        BufferedReader teclado = new BufferedReader(flujo);
+        float numero = 0;
+        try {
+            boolean bien = false;
+            while (!bien) {
+                try {
+                    System.out.println(mensaje);
+                    numero = Float.parseFloat(teclado.readLine());
+                    if (numero < linferior | numero > lsuperior) {
+
+                        System.out.println("ERROR: el número  no es correcto");
+                    } else {
+                        bien = true;
+                    }
+                } catch (NumberFormatException ex) {
+                    System.out.println("El valor introducido no es un número");
+                }//catch 
+            }//while
+        } catch (IOException ex) {
+        }
+        return numero;
+    }
+     
+     public void Salida (){
+         int nplaza;
+        Parking n = new Parking ();
+         nplaza= (int) n.pedirNumero ("plaza que estaba ocupada: ",0,plazas.length-1);
+         if (plazas [nplaza].equalsIgnoreCase("OCUPADA"))
+                 {
+             plazas [nplaza] = "LIBRE";
+         }
+         else {
+             System.out.println("Esa plaza ya estaba libre");
+         }
+                 
+     }
 }
